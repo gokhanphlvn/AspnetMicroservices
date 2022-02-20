@@ -1,0 +1,23 @@
+Get all image
+
+docker ps -a
+--Versiyon
+docker version
+
+--Images
+docker images
+
+--Belli id deki container silinir.
+docker rm a6c
+
+--Belli id deki container durudur.
+docker stop 722
+
+--Tümünü Sil
+docker-compose -f docker-compose.yml -f docker-compose.override.yml down
+
+--Tümünü build ederek kur
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up --build
+
+--Yeniler kurulmasý
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
