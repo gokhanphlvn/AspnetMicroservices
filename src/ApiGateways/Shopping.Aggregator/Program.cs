@@ -1,4 +1,5 @@
 using Common.Logging;
+using Serilog;
 using Shopping.Aggregator.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,25 +11,24 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Host.UseSerilog(SeriLogger.Configure);
+
 builder.Services.AddTransient<LoggingDelegatingHandler>();
 
-builder.Services.AddHttpClient<ICatalogService, CatalogService>(c =>
-    c.BaseAddress = new Uri(builder.Configuration["ApiSettings:CatalogUrl"]))
+builder.Services.AddHttpClient<ICatalogService, CatalogService>(c => c.BaseAddress = new Uri(builder.Configuration["ApiSettings:CatalogUrl"]))
     .AddHttpMessageHandler<LoggingDelegatingHandler>();
 //.AddPolicyHandler(GetRetryPolicy())
 //.AddPolicyHandler(GetCircuitBreakerPolicy());
 
-builder.Services.AddHttpClient<IBasketService, BasketService>(c =>
-    c.BaseAddress = new Uri(builder.Configuration["ApiSettings:BasketUrl"]))
+builder.Services.AddHttpClient<IBasketService, BasketService>(c => c.BaseAddress = new Uri(builder.Configuration["ApiSettings:BasketUrl"]))
     .AddHttpMessageHandler<LoggingDelegatingHandler>();
 //.AddPolicyHandler(GetRetryPolicy())
 //.AddPolicyHandler(GetCircuitBreakerPolicy());
 
-builder.Services.AddHttpClient<IOrderService, OrderService>(c =>
-    c.BaseAddress = new Uri(builder.Configuration["ApiSettings:OrderingUrl"]))
+builder.Services.AddHttpClient<IOrderService, OrderService>(c => c.BaseAddress = new Uri(builder.Configuration["ApiSettings:OrderingUrl"]))
     .AddHttpMessageHandler<LoggingDelegatingHandler>();
-    //.AddPolicyHandler(GetRetryPolicy())
-    //.AddPolicyHandler(GetCircuitBreakerPolicy());
+//.AddPolicyHandler(GetRetryPolicy())
+//.AddPolicyHandler(GetCircuitBreakerPolicy());
 
 var app = builder.Build();
 

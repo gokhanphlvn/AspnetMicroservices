@@ -64,8 +64,21 @@ services:
       context: .
       dockerfile: ApiGateways/Shopping.Aggregator/Dockerfile
 
+  aspnetrunbasics:
+    image: ${DOCKER_REGISTRY-}aspnetrunbasics
+    build:
+      context: .
+      dockerfile: WebApps/AspnetRunBasics/Dockerfile
+    
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.3
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.3
+
 volumes:
   mongo_data:
   portainer_data:
   postgres_data:
-  pgadmin_data: 
+  pgadmin_data:
+  elasticsearch-data:
