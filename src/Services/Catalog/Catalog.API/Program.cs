@@ -1,8 +1,12 @@
 using Catalog.API.Data;
 using Catalog.API.Repositories;
+using Common.Logging;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog(SeriLogger.Configure);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

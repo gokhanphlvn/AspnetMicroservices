@@ -7,6 +7,7 @@
     <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
+    <UserSecretsId>6e8f79c7-0c38-4d65-8b93-5d462d2d74ce</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +15,10 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="Npgsql" Version="6.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\Common.Logging\Common.Logging.csproj" />
   </ItemGroup>
 
 </Project>
