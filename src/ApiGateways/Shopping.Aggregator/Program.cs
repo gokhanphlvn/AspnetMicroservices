@@ -16,19 +16,22 @@ builder.Host.UseSerilog(SeriLogger.Configure);
 builder.Services.AddTransient<LoggingDelegatingHandler>();
 
 builder.Services.AddHttpClient<ICatalogService, CatalogService>(c => c.BaseAddress = new Uri(builder.Configuration["ApiSettings:CatalogUrl"]))
-    .AddHttpMessageHandler<LoggingDelegatingHandler>();
-//.AddPolicyHandler(GetRetryPolicy())
-//.AddPolicyHandler(GetCircuitBreakerPolicy());
+    .AddHttpMessageHandler<LoggingDelegatingHandler>()
+    .AddPolicyHandler(SeriLogger.GetRetryPolicy())
+    .AddPolicyHandler(SeriLogger.GetCircuitBreakerPolicy());
 
 builder.Services.AddHttpClient<IBasketService, BasketService>(c => c.BaseAddress = new Uri(builder.Configuration["ApiSettings:BasketUrl"]))
-    .AddHttpMessageHandler<LoggingDelegatingHandler>();
-//.AddPolicyHandler(GetRetryPolicy())
-//.AddPolicyHandler(GetCircuitBreakerPolicy());
+    .AddHttpMessageHandler<LoggingDelegatingHandler>()
+    //.AddTransientHttpErrorPolicy(policy => policy.WaitAndRetryAsync(3, _ => TimeSpan.FromSeconds(2)))
+    //.AddTransientHttpErrorPolicy(policy => policy.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)))
+    .AddPolicyHandler(SeriLogger.GetRetryPolicy())
+    .AddPolicyHandler(SeriLogger.GetCircuitBreakerPolicy());
 
 builder.Services.AddHttpClient<IOrderService, OrderService>(c => c.BaseAddress = new Uri(builder.Configuration["ApiSettings:OrderingUrl"]))
-    .AddHttpMessageHandler<LoggingDelegatingHandler>();
-//.AddPolicyHandler(GetRetryPolicy())
-//.AddPolicyHandler(GetCircuitBreakerPolicy());
+    .AddHttpMessageHandler<LoggingDelegatingHandler>()
+    .AddPolicyHandler(SeriLogger.GetRetryPolicy())
+    .AddPolicyHandler(SeriLogger.GetCircuitBreakerPolicy());
+
 
 var app = builder.Build();
 

@@ -11,11 +11,19 @@ builder.Host.UseSerilog(Common.Logging.SeriLogger.Configure);
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<LoggingDelegatingHandler>();
 builder.Services.AddHttpClient<ICatalogService, CatalogService>(c => c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]))
-                .AddHttpMessageHandler<LoggingDelegatingHandler>();
+                .AddHttpMessageHandler<LoggingDelegatingHandler>()
+                .AddPolicyHandler(SeriLogger.GetRetryPolicy())
+                .AddPolicyHandler(SeriLogger.GetCircuitBreakerPolicy());
+
 builder.Services.AddHttpClient<IBasketService, BasketService>(c => c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]))
-                .AddHttpMessageHandler<LoggingDelegatingHandler>();
+                .AddHttpMessageHandler<LoggingDelegatingHandler>()
+                .AddPolicyHandler(SeriLogger.GetRetryPolicy())
+                .AddPolicyHandler(SeriLogger.GetCircuitBreakerPolicy());
+
 builder.Services.AddHttpClient<IOrderService, OrderService>(c => c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]))
-                .AddHttpMessageHandler<LoggingDelegatingHandler>();
+                .AddHttpMessageHandler<LoggingDelegatingHandler>()
+                .AddPolicyHandler(SeriLogger.GetRetryPolicy())
+                .AddPolicyHandler(SeriLogger.GetCircuitBreakerPolicy());
 
 var app = builder.Build();
 
