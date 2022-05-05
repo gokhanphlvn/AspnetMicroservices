@@ -47,6 +47,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApps", "WebApps", "{8B52
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspnetRunBasics", "WebApps\AspnetRunBasics\AspnetRunBasics.csproj", "{B74A418D-C400-44D6-AE03-041F0E45B775}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStatus", "WebApps\WebStatus\WebStatus.csproj", "{B5D4F0F7-4A61-47F7-AB02-CAA174F233D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,6 +110,10 @@ Global
 		{B74A418D-C400-44D6-AE03-041F0E45B775}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B74A418D-C400-44D6-AE03-041F0E45B775}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B74A418D-C400-44D6-AE03-041F0E45B775}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5D4F0F7-4A61-47F7-AB02-CAA174F233D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5D4F0F7-4A61-47F7-AB02-CAA174F233D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5D4F0F7-4A61-47F7-AB02-CAA174F233D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5D4F0F7-4A61-47F7-AB02-CAA174F233D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -130,6 +136,7 @@ Global
 		{326DAB14-1026-4B76-85B5-688187E2217D} = {2E2046E2-D34A-4799-BF81-647D520297EB}
 		{E4C6075E-AE59-45ED-8BD9-488913D32407} = {B152BD8F-F9ED-43E8-968F-B6B166690827}
 		{B74A418D-C400-44D6-AE03-041F0E45B775} = {8B5262D1-61B8-4716-813D-D390A2ABD772}
+		{B5D4F0F7-4A61-47F7-AB02-CAA174F233D6} = {8B5262D1-61B8-4716-813D-D390A2ABD772}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {60637DF2-5F28-418E-AEC2-343CEEB09F29}

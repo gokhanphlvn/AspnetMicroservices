@@ -3,7 +3,10 @@ using Basket.API.Repositories;
 using Basket.API.Repositories.Interfaces;
 using Common.Logging;
 using Discount.Grpc.Protos;
+using HealthChecks.UI.Client;
 using MassTransit;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,7 +33,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(o =>
 {
 #if DEBUG
-                o.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"].Replace("8003", "5003"));
+    o.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"].Replace("8003", "5003"));
 #else
                 o.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]);
 #endif
@@ -44,10 +47,16 @@ builder.Services.AddMassTransit(config =>
     config.UsingRabbitMq((ctx, cfg) =>
     {
         cfg.Host(builder.Configuration["EventBusSettings:HostAddress"]);
-        //cfg.UseHealthCheck(ctx);
+        cfg.UseHealthCheck(ctx);
     });
 });
 builder.Services.AddMassTransitHostedService();
+
+builder.Services.AddHealthChecks()
+                .AddRedis(builder.Configuration["CacheSettings:ConnectionString"],
+                        "Redis Health",
+                        HealthStatus.Degraded);
+
 #endregion
 
 var app = builder.Build();
@@ -62,5 +71,10 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHealthChecks("/hc", new HealthCheckOptions()
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.Run();
